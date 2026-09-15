@@ -1,0 +1,43 @@
+{
+  "agent": "EnzymeDBTL_DynamicTools",
+  "timestamp": "2026-08-17T10:37:10.143294+00:00",
+  "cycles": 3,
+  "best_cycle": 2,
+  "best_ratio": 0.2725,
+  "all_cycles": [
+    {
+      "bottleneck_gene": "GFA1",
+      "bottleneck_kcat": 44.14,
+      "pathway_kcat": 134.67,
+      "sink_kcat": 1312.18,
+      "ratio": 0.1026,
+      "cycle": 0,
+      "timestamp": "2026-08-17T10:37:10.142856+00:00",
+      "mod": "none"
+    },
+    {
+      "bottleneck_gene": "GFA1",
+      "bottleneck_kcat": 88.28,
+      "pathway_kcat": 178.81,
+      "sink_kcat": 1312.18,
+      "ratio": 0.1363,
+      "cycle": 1,
+      "timestamp": "2026-08-17T10:37:10.142896+00:00",
+      "mod": "GFA1"
+    },
+    {
+      "bottleneck_gene": "GFA1",
+      "bottleneck_kcat": 88.28,
+      "pathway_kcat": 178.81,
+      "sink_kcat": 656.09,
+      "ratio": 0.2725,
+      "cycle": 2,
+      "timestamp": "2026-08-17T10:37:10.142918+00:00",
+      "mod": "CHS3"
+    }
+  ],
+  "caveats": [
+    "GECKO/Task2 not used",
+    "ML tools attempted; fallback to experimental if models fail"
+  ]
+}

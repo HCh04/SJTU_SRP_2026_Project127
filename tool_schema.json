@@ -1,0 +1,47 @@
+{
+  "tools": [
+    {
+      "name": "build_model",
+      "description": "Loads MEWpy's enzyme-constrained yeast model (GECKO, single-pool) and adds the GlcNAc dephosphorylation + export reactions, applying real kcat values from Student A's data.",
+      "inputs": {},
+      "outputs": {
+        "status": "str",
+        "growth_rate": "float — growth rate (1/h) of the built model",
+        "product_rxn": "str — 'r_GLCNAC_EXCHANGE'"
+      }
+    },
+    {
+      "name": "find_bottleneck",
+      "description": "Runs Flux Variability Analysis on the product reaction at a fixed growth rate, and ranks candidate proteins by enzyme usage flux to identify the current rate-limiting bottleneck(s).",
+      "inputs": {
+        "growth_rate": "float, required",
+        "top_n": "int, default 3 — number of top bottleneck proteins to return"
+      },
+      "outputs": {
+        "status": "str",
+        "growth_rate": "float",
+        "fva": "str — min/max flux range for the product reaction",
+        "bottleneck_proteins": "list of UniProt IDs, ranked by enzyme usage flux (most limiting first)"
+      }
+    },
+    {
+      "name": "suggest_targets",
+      "description": "Enzyme-aware strain design via MEWpy's GeckoOUProblem + NSGAII evolutionary search, optimizing BPCY and WYIELD.",
+      "inputs": {
+        "max_generations": "int, default 20 (use a small value like 5 for quick tests — this can be slow)"
+      },
+      "outputs": {
+        "status": "str",
+        "n_solutions": "int — number of Pareto-optimal strategies found",
+        "solutions": "list of objects — each has Modification (dict mapping protein reaction ID to expression fold-change), Size (int, number of proteins modified), BPCY (float), WYIELD (float)"
+      }
+    }
+  ],
+  "known_caveats": [
+    "Enzyme constraints ARE used (MEWpy GeckoModel, single-pool), per project direction.",
+    "Real kcat values from Student A's data are applied to 10 of 14 enzymes. GPI3, GPI12, and ALG7 are not present in this bundled GECKO model's proteome and cannot be constrained. ALG13 is excluded by design due to low AlphaFold confidence.",
+    "The dephosphorylation reaction (r_GLCNAC_1, UDP-GlcNAc -> free GlcNAc) has no confirmed gene yet -- possibly DOG1, pending confirmation from Student A.",
+    "find_bottleneck's bottleneck_proteins ranking is limited to the same 10 candidate proteins used in suggest_targets -- it does not scan the full model proteome.",
+    "No published benchmark exists for GlcNAc (unlike the steroid case)."
+  ]
+}
